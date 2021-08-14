@@ -1,10 +1,12 @@
-type ZipOptions = {
-  truncate: true
-  placeholder?: never
-} | {
-  truncate: false
-  placeholder: any
-}
+type ZipOptions =
+  | {
+      truncate: true
+      placeholder?: never
+    }
+  | {
+      truncate: false
+      placeholder: any
+    }
 
 /**
  * Zips corresponding elements from a collection of enumerables into a list of tuples.
@@ -28,9 +30,8 @@ export const zip = <T>(arrays: T[][], userOptions?: ZipOptions) => {
   const parentArray = Array.from(Array(desiredArrayLength).keys())
 
   return parentArray.map((_item, index) =>
-    arrays.map(array => typeof array[index] === 'undefined'
-        ? options?.placeholder
-        : array[index]
+    arrays.map(array =>
+      typeof array[index] === 'undefined' ? options?.placeholder : array[index]
     )
   )
 }

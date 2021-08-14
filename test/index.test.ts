@@ -56,10 +56,13 @@ describe('zip', () => {
 
     it('truncate false leaves input null values in place', () => {
       expect(
-        zip([
-          [1, null, 3],
-          [4, 5, null, 6],
-        ], { truncate: false, placeholder: '-' })
+        zip(
+          [
+            [1, null, 3],
+            [4, 5, null, 6],
+          ],
+          { truncate: false, placeholder: '-' }
+        )
       ).toEqual([
         [1, 4],
         [null, 5],
