@@ -1,6 +1,9 @@
-interface ZipOptions {
-  truncate?: boolean
-  placeholder?: string
+type ZipOptions = {
+  truncate: true
+  placeholder?: never
+} | {
+  truncate: false
+  placeholder: any
 }
 
 /**
@@ -8,11 +11,11 @@ interface ZipOptions {
  * By default, the zipping finishes as soon as any enumerable in the given collection completes.
  */
 export const zip = <T>(arrays: T[][], userOptions?: ZipOptions) => {
-  const defaultOptions = {
+  const defaultOptions: ZipOptions = {
     truncate: true,
   }
 
-  const options: ZipOptions = {
+  const options = {
     ...defaultOptions,
     ...userOptions,
   }
@@ -25,6 +28,9 @@ export const zip = <T>(arrays: T[][], userOptions?: ZipOptions) => {
   const parentArray = Array.from(Array(desiredArrayLength).keys())
 
   return parentArray.map((_item, index) =>
-    arrays.map(array => array[index] || options?.placeholder || null)
+    arrays.map(array => typeof array[index] === 'undefined'
+        ? options?.placeholder
+        : array[index]
+    )
   )
 }

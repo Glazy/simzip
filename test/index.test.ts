@@ -43,7 +43,7 @@ describe('zip', () => {
             [1, 2, 3, 4, 5],
             [1, 2, 3],
           ],
-          { truncate: false }
+          { truncate: false, placeholder: null }
         )
       ).toEqual([
         [1, 1],
@@ -51,6 +51,20 @@ describe('zip', () => {
         [3, 3],
         [4, null],
         [5, null],
+      ])
+    })
+
+    it('truncate false leaves input null values in place', () => {
+      expect(
+        zip([
+          [1, null, 3],
+          [4, 5, null, 6],
+        ], { truncate: false, placeholder: '-' })
+      ).toEqual([
+        [1, 4],
+        [null, 5],
+        [3, null],
+        ['-', 6],
       ])
     })
 
