@@ -1,14 +1,29 @@
+interface ZipOptions {
+  truncate?: boolean
+}
+
 /**
  * Zips corresponding elements from a collection of enumerables into a list of tuples.
- *
  * By default, the zipping finishes as soon as any enumerable in the given collection completes.
- *
- * @param arrays List of enumerables
- * @returns List of tuples
  */
-export const zip = <T>(arrays: T[][]) => {
-  const shortestArrayLength = Math.min(...arrays.map(array => array.length))
-  const parentArray = Array.from(Array(shortestArrayLength).keys())
+export const zip = <T>(arrays: T[][], userOptions?: ZipOptions) => {
+  const defaultOptions = {
+    truncate: true,
+  }
 
-  return parentArray.map((_item, index) => arrays.map(array => array[index]))
+  const options = {
+    ...defaultOptions,
+    ...userOptions,
+  }
+
+  const arrayLengths = arrays.map(array => array.length)
+  const desiredArrayLength = options?.truncate
+    ? Math.min(...arrayLengths)
+    : Math.max(...arrayLengths)
+
+  const parentArray = Array.from(Array(desiredArrayLength).keys())
+
+  return parentArray.map((_item, index) =>
+    arrays.map(array => array[index] || null)
+  )
 }

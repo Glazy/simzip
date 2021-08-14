@@ -34,4 +34,21 @@ describe('zip', () => {
       ])
     })
   })
+
+  describe('with options', () => {
+    it('handles truncate false', () => {
+      expect(
+        zip([
+          [1, 2, 3, 4, 5],
+          [1, 2, 3],
+        ], { truncate: false })
+      ).toEqual([
+        [1, 1],
+        [2, 2],
+        [3, 3],
+        [4, null],
+        [5, null],
+      ])
+    })
+  })
 })
