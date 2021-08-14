@@ -38,16 +38,35 @@ describe('zip', () => {
   describe('with options', () => {
     it('handles truncate false', () => {
       expect(
-        zip([
-          [1, 2, 3, 4, 5],
-          [1, 2, 3],
-        ], { truncate: false })
+        zip(
+          [
+            [1, 2, 3, 4, 5],
+            [1, 2, 3],
+          ],
+          { truncate: false }
+        )
       ).toEqual([
         [1, 1],
         [2, 2],
         [3, 3],
         [4, null],
         [5, null],
+      ])
+    })
+
+    it('handles placeholder value with truncation disabled', () => {
+      expect(
+        zip(
+          [
+            [1, 2, 3],
+            [4, 5],
+          ],
+          { truncate: false, placeholder: '-' }
+        )
+      ).toEqual([
+        [1, 4],
+        [2, 5],
+        [3, '-'],
       ])
     })
   })

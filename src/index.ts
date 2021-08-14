@@ -1,5 +1,6 @@
 interface ZipOptions {
   truncate?: boolean
+  placeholder?: string
 }
 
 /**
@@ -11,7 +12,7 @@ export const zip = <T>(arrays: T[][], userOptions?: ZipOptions) => {
     truncate: true,
   }
 
-  const options = {
+  const options: ZipOptions = {
     ...defaultOptions,
     ...userOptions,
   }
@@ -24,6 +25,6 @@ export const zip = <T>(arrays: T[][], userOptions?: ZipOptions) => {
   const parentArray = Array.from(Array(desiredArrayLength).keys())
 
   return parentArray.map((_item, index) =>
-    arrays.map(array => array[index] || null)
+    arrays.map(array => array[index] || options?.placeholder || null)
   )
 }
